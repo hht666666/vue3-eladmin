@@ -13,7 +13,8 @@
     "format": "prettier --write src/",
     "prepare": "husky install",
     "commit": "cz",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "prettier": "prettier --write ."
   },
   "lint-staged": {
     "*.{js,ts,vue,jsx,tsx}": [
@@ -49,6 +50,8 @@
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.2.5",
     "typescript": "~5.4.0",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
     "vite": "^5.2.8",
     "vue-tsc": "^2.0.11"
   },
