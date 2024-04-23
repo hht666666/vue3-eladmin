@@ -9,12 +9,14 @@ import AutoImport from 'unplugin-auto-import/vite'
 //自动导入ui-组件 比如说ant-design-vue  element-plus等
 import Components from 'unplugin-vue-components/vite'
 
+// console.log('********************',import.meta.env,'***************************');
+
 // https://vitejs.dev/config/
 export default defineConfig({
   // 打包
   build: {
     // 打包后文件名
-    outDir: 'distss'
+    // outDir: 'dists',
     // assets打包后文件名
     // assetsDir: 'assetsss',
   },
