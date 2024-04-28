@@ -1,17 +1,15 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-
 // 自动导入vue中hook reactive ref等
 import AutoImport from 'unplugin-auto-import/vite'
 //自动导入ui-组件 比如说ant-design-vue  element-plus等
 import Components from 'unplugin-vue-components/vite'
+//访问本地环境变量插件
+import { loadEnv } from 'vite'
+console.log(loadEnv(process.env.VITE_USER_NODE_ENV as string, process.cwd()))
 
-// console.log('********************',import.meta.env,'***************************');
-
-// https://vitejs.dev/config/
 export default defineConfig({
   // 打包
   build: {
@@ -21,7 +19,7 @@ export default defineConfig({
     // assetsDir: 'assetsss',
   },
   server: {
-    //设置为0.0.0.0别人才能访问我的项目
+    //如果多台电脑处在同一个局域网下，配置0.0.0.0后，别的电脑就可以通过ip://端口号 访问到当前项目
     host: '0.0.0.0',
     // 端口号
     port: 3000,

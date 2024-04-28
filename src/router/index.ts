@@ -7,7 +7,14 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      children: [
+        {
+          path: '/echarts',
+          name: 'echarts',
+          component: () => import('../views/home/EchArts.vue')
+        }
+      ]
     },
     {
       path: '/about',
@@ -22,4 +29,15 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.path == '/login') {
+    next()
+  } else {
+    if (localStorage.getItem('token')) {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+})
 export default router
