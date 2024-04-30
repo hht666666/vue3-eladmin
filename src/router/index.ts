@@ -8,11 +8,17 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      redirect: '/echarts',
       children: [
         {
           path: '/echarts',
           name: 'echarts',
           component: () => import('../views/home/EchArts.vue')
+        },
+        {
+          path: '/usermanage',
+          name: 'usermanage',
+          component: () => import('../views/SystemManage/UserManage.vue')
         }
       ]
     },

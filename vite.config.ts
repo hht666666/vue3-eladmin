@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
+import { createSvg } from './src/icons/index'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 // 自动导入vue中hook reactive ref等
@@ -36,6 +37,7 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    createSvg('./src/icons/svg/'),
     AutoImport({
       //安装两行后你会发现在组件中不用再导入ref，reactive等
       imports: ['vue', 'vue-router'],
