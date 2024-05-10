@@ -9,7 +9,8 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 //访问本地环境变量插件
 import { loadEnv } from 'vite'
-console.log(loadEnv(process.env.VITE_USER_NODE_ENV as string, process.cwd()))
+const env = loadEnv(process.env.NODE_ENV as string, process.cwd())
+console.log(env)
 
 export default defineConfig({
   // 打包
@@ -27,10 +28,15 @@ export default defineConfig({
     // 自动打开浏览器
     open: true,
     proxy: {
-      '/api': {
-        target: '',
+      /**代理标识 */
+      [env.VITE_APP_BASE_API]: {
+        /**代理路径 */
+        target: env.VITE_APP_BASE_URL,
+        /**是否开启跨域地理 */
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        /**路径重写 */
+        // rewrite: (path) => path.replace(/^\/env.VITE_APP_BASE_API/, ''),
+        rewrite: (path) => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
       }
     }
   },

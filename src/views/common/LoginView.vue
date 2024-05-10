@@ -24,7 +24,17 @@
           />
         </el-form-item>
         <el-form-item prop="code">
-          <el-input v-model="ruleForm.code" :prefix-icon="CircleCheckFilled" placeholder="验证码" />
+          <div style="display: flex; width: 100%">
+            <el-input
+              v-model="ruleForm.code"
+              :prefix-icon="CircleCheckFilled"
+              placeholder="验证码"
+              @keyup.enter="submitForm(ruleFormRef)"
+            />
+            &ensp;
+            <img :src="codeurl" alt="" style="width: 100px; height: 30px" @click="getcode" />
+            &ensp;
+          </div>
         </el-form-item>
 
         <p><el-checkbox v-model="checked" size="large" /> &ensp; 记住我</p>
@@ -44,24 +54,31 @@
 </template>
 
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 //引入图标
 import { Avatar, Lock, CircleCheckFilled } from '@element-plus/icons-vue'
 //引入路由
 import { useRouter } from 'vue-router'
+//密码加密
+import { encrypted } from '@/utils/jsencrypt'
+//引入接口
+import { loginCode, login } from '@/api/api'
+//引入cookie
+import { setToken } from '@/utils/auth'
+
 const router = useRouter()
 //表单双向绑定
 interface RuleForm {
   username: string
   password: string
   code: string
-  unid: string
+  uuid: string
 }
 const ruleForm = reactive<RuleForm>({
   username: 'admin',
-  password: '123455',
+  password: '123456',
   code: '',
-  unid: ''
+  uuid: ''
 })
 //表单校验
 const rules = reactive<FormRules<RuleForm>>({
@@ -69,25 +86,48 @@ const rules = reactive<FormRules<RuleForm>>({
   password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
   code: [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
 })
-//添加
+
+//登录
 const ruleFormRef = ref<FormInstance>()
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      localStorage.setItem('token', '666')
-      //跳转页面，关闭当前页面
-      router.replace('/')
+      //调用登录接口
+      login({
+        code: ruleForm.code,
+        password: encrypted(ruleForm.password) as string,
+        username: ruleForm.username,
+        uuid: ruleForm.uuid
+      }).then((res: any) => {
+        console.log(res)
+        if (res) {
+          //登录成功，保存token
+          setToken(res.token)
+          //跳转页面，关闭当前页面
+          router.replace('/')
+        } else {
+          //重新获取验证码
+          getcode()
+          //重复执行登录
+          submitForm(ruleFormRef.value)
+        }
+      })
     }
   })
 }
 //复选框
 let checked = ref(false)
 
-//获取验证码
-// const getcode=(){
-
-// }
+//获取验证码图片
+let codeurl = ref('')
+const getcode = () => {
+  loginCode().then((res: any) => {
+    codeurl.value = res.img
+    ruleForm.uuid = res.uuid
+  })
+}
+getcode()
 </script>
 
 <style lang="scss" scoped>
