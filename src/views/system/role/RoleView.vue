@@ -1,5 +1,5 @@
 <template>
-  <div class="role">
+  <div class="root-node">
     <UserManagerComponent @getTableData="getTableData"></UserManagerComponent>
 
     <div class="div">
@@ -98,7 +98,7 @@ const loadNode = (node: any, resolve: (data: any) => void) => {
   if (node.level === 0) {
     //获取最外层结构
     getMenuList(0).then((res: any) => {
-      console.log(res)
+      // console.log(res)
       return resolve(res)
     })
   } else {
@@ -114,9 +114,7 @@ const loadNode = (node: any, resolve: (data: any) => void) => {
 </script>
 
 <style lang="scss" scoped>
-.role {
-  padding: 20px;
-  box-sizing: border-box;
+.root-node {
   .div {
     display: flex;
     justify-content: space-between;

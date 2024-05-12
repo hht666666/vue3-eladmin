@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div class="root-node">
     <div class="left">
       <el-input
         v-model="name"
@@ -191,12 +191,8 @@ const del = (row: any) => {
 </script>
 
 <style lang="scss" scoped>
-.user {
-  width: 100%;
-  height: 100%;
+.root-node {
   display: flex;
-  padding: 20px;
-  box-sizing: border-box;
   .left {
     width: 200px;
   }

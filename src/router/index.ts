@@ -56,6 +56,22 @@ const addRouters = [
       title: '角色管理'
     },
     component: () => import('../views/system/dept/DeptView.vue')
+  },
+  {
+    path: '/menu',
+    name: 'menu',
+    meta: {
+      title: '角色管理'
+    },
+    component: () => import('../views/system/menu/MenuView.vue')
+  },
+  {
+    path: '/job',
+    name: 'job',
+    meta: {
+      title: '角色管理'
+    },
+    component: () => import('../views/system/job/JobView.vue')
   }
 ]
 

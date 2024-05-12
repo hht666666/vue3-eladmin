@@ -58,3 +58,29 @@ export const getRoleList = (params: IroleList) => {
 export const getMenuList = (pid: number) => {
   return http.get<any>(`/api/menus/lazy`, { pid })
 }
+//---------------------------------菜单管理---------------------------------
+//获取菜单列表
+interface IgetMenuList1 {
+  page: number
+  size: number
+  sort: string
+}
+export const getMenuList1 = (params: IgetMenuList1) => {
+  return http.get<any>('/api/menus', params)
+}
+//获取子级菜单
+export const getMenuList2 = (pid: number) => {
+  return http.get<any>(`/api/menus`, { pid })
+}
+
+//---------------------------------岗位管理---------------------------------
+//获取岗位列表
+interface IgetJobList {
+  page: number
+  size: number
+}
+export const getJobList = (params: IgetJobList) => {
+  return http.get<any>(
+    `/api/job?page=${params.page}&size=${params.size}&sort=jobSort,asc&sort=id,desc`
+  )
+}

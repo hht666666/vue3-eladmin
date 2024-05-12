@@ -64,6 +64,8 @@ import ZheXian from './components/ZheXian.vue'
 import LeiDa from './components/LeiDa.vue'
 import BingZhuang from './components/BingZhuang.vue'
 import ZhuZhuang from './components/ZhuZhuang.vue'
+import router from '@/router'
+console.log(router)
 </script>
 
 <style lang="scss" scoped>

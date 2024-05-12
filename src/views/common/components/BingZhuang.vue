@@ -28,7 +28,7 @@ onMounted(() => {
         name: 'Nightingale Chart',
         type: 'pie',
         radius: [10, 100],
-        center: ['50%', '50%'],
+        center: ['50%', '45%'],
         roseType: 'area',
         itemStyle: {
           borderRadius: 8

@@ -63,6 +63,7 @@ provide('isCollapse', isCollapse)
       font-size: 12px;
       border-top: 1px solid #e7eaec;
       transition: all 0.3s;
+      z-index: 99999;
     }
   }
 }

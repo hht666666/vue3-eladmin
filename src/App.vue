@@ -17,4 +17,12 @@
   margin: 0;
   padding: 0;
 }
+.root-node {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding-bottom: 60px;
+}
 </style>
