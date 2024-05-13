@@ -18,7 +18,7 @@
 
   <div class="div">
     <div>
-      <el-button type="primary" :icon="Plus">新增</el-button>
+      <el-button type="primary" :icon="Plus" @click="emit('add')">新增</el-button>
       <el-button type="success" :icon="Edit">修改</el-button>
       <el-button type="danger" :icon="Delete">删除</el-button>
       <el-button type="warning" :icon="Download">导出</el-button>
@@ -28,7 +28,7 @@
       <!-- 控制搜索功能显示隐藏 -->
       <el-button :icon="Search" @click="flag = !flag" />
       <!-- 刷新表格 -->
-      <el-button :icon="Refresh" @click="getTableData" />
+      <el-button :icon="Refresh" @click="emit('getTableData')" />
       <el-button :icon="Grid" />
     </div>
   </div>
@@ -46,13 +46,7 @@ import {
 } from '@element-plus/icons-vue'
 
 //接收父组件方法
-const emit = defineEmits(['getTableData'])
-
-//调用父组件方法
-//刷新表格
-const getTableData = () => {
-  emit('getTableData')
-}
+const emit = defineEmits(['getTableData', 'add'])
 //控制搜索功能显示隐藏
 const flag = ref(true)
 </script>

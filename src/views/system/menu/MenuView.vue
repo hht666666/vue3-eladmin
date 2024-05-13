@@ -23,24 +23,21 @@
       <el-table-column label="外链" width="50">
         <template #default="scope">
           <div>
-            <span v-if="scope.row.iFrame">是</span>
-            <span v-else>否</span>
+            {{ scope.row.iFrame ? '是' : '否' }}
           </div>
         </template>
       </el-table-column>
       <el-table-column label="缓存" width="50">
         <template #default="scope">
           <div>
-            <span v-if="scope.row.cache">是</span>
-            <span v-else>否</span>
+            {{ scope.row.cache ? '是' : '否' }}
           </div>
         </template>
       </el-table-column>
       <el-table-column label="可见" width="50">
         <template #default="scope">
           <div>
-            <span v-if="scope.row.hasChildren">是</span>
-            <span v-else>否</span>
+            {{ scope.row.hasChildren ? '是' : '否' }}
           </div>
         </template>
       </el-table-column>

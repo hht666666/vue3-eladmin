@@ -1,6 +1,6 @@
 <template>
   <div class="root-node">
-    <UserManagerComponent @getTableData="getTableData"></UserManagerComponent>
+    <UserManagerComponent @getTableData="getTableData" @add="add"></UserManagerComponent>
     <el-table
       size="small"
       ref="multipleTableRef"
@@ -10,9 +10,14 @@
     >
       <el-table-column type="selection" />
       <el-table-column property="name" label="名称" />
-      <el-table-column property="dataScope" label="数据权限" />
-      <el-table-column property="level" label="角色级别" />
-      <el-table-column property="description" label="描述" />
+      <el-table-column property="jobSort" label="排序" />
+      <el-table-column property="enabled" label="状态">
+        <template #default="scope">
+          <div>
+            <el-switch v-model="scope.row.enabled" />
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column property="createTime" label="创建日期" />
       <el-table-column label="操作" width="150">
         <template #default>
@@ -42,7 +47,7 @@ import UserManagerComponent from '@/components/UserManagerComponent.vue'
 //引入图标
 import { Delete, Edit } from '@element-plus/icons-vue'
 //引入接口
-import { getJobList } from '@/api/api'
+import { getJobList, addJob } from '@/api/api'
 
 //获取表格数据
 const tableData = reactive({
@@ -59,7 +64,7 @@ const loading = ref(false)
 const getTableData = () => {
   //开启加载
   loading.value = true
-  //请求
+  //请求表格数据
   getJobList({ ...page, page: page.page - 1 }).then((res: any) => {
     console.log(res)
     tableData.list = res.content
@@ -69,6 +74,9 @@ const getTableData = () => {
   })
 }
 getTableData()
+
+//添加
+const add = () => {}
 </script>
 
 <style lang="scss" scoped></style>

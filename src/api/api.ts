@@ -84,3 +84,16 @@ export const getJobList = (params: IgetJobList) => {
     `/api/job?page=${params.page}&size=${params.size}&sort=jobSort,asc&sort=id,desc`
   )
 }
+//添加岗位
+interface IaddJob {
+  createTime: '2019-03-31 13:39:30'
+  enabled: boolean
+  id: null
+  jobSort: number
+  name: string
+  updateTime: '2020-05-05 11:33:43'
+  updateBy: string
+}
+export const addJob = (data: IaddJob) => {
+  return http.post<any>('/api/job', data)
+}
