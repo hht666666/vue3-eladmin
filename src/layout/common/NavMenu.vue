@@ -17,12 +17,12 @@
         <template #title>首页</template>
       </el-menu-item>
 
-      <el-sub-menu :index="'/' + item.path" v-for="item in list.menus" :key="item.path">
+      <el-sub-menu :index="item.path" v-for="item in list.menus" :key="item.path">
         <template #title>
           <el-icon><Setting /></el-icon>
           <span>{{ item.meta.title }}</span>
         </template>
-        <el-menu-item :index="'/' + ele.path" v-for="ele in item.children" :key="ele.path">
+        <el-menu-item :index="ele.path" v-for="ele in item.children" :key="ele.path">
           <el-icon><UserFilled /></el-icon>
           <template #title>{{ ele.meta.title }}</template>
         </el-menu-item>
@@ -32,19 +32,13 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
 //引入接口
-import { getMenu } from '@/api/api'
 //控制菜单的展开与收起
 const isCollapse = inject('isCollapse')
 
 //获取菜单数据
 const list = reactive<any>({
-  menus: []
-})
-getMenu().then((res: any) => {
-  // console.log(res)
-  list.menus = res
+  menus: JSON.parse(sessionStorage.getItem('addRouters') as string) || []
 })
 </script>
 

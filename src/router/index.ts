@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { getToken } from '../utils/auth'
+import { getMenu } from '@/api/api'
 
 /**静态路由,第一种全局路由,不需要以侧边栏作为入口的路由 */
 const globalRoutes = [
@@ -31,53 +32,6 @@ const homeRoutes = [
   }
 ]
 
-/**动态路由表 */
-const addRouters = [
-  {
-    path: '/user',
-    name: 'user',
-    meta: {
-      title: '用户管理'
-    },
-    component: () => import('../views/system/user/UserView.vue')
-  },
-  {
-    path: '/role',
-    name: 'role',
-    meta: {
-      title: '角色管理'
-    },
-    component: () => import('../views/system/role/RoleView.vue')
-  },
-  {
-    path: '/dept',
-    name: 'dept',
-    meta: {
-      title: '角色管理'
-    },
-    component: () => import('../views/system/dept/DeptView.vue')
-  },
-  {
-    path: '/menu',
-    name: 'menu',
-    meta: {
-      title: '角色管理'
-    },
-    component: () => import('../views/system/menu/MenuView.vue')
-  },
-  {
-    path: '/job',
-    name: 'job',
-    meta: {
-      title: '角色管理'
-    },
-    component: () => import('../views/system/job/JobView.vue')
-  }
-]
-
-/**将首页添加到动态路由表的第一个 */
-addRouters.unshift(homeRoutes[0])
-
 // 主入口路由
 export const routes = [
   {
@@ -85,7 +39,7 @@ export const routes = [
     name: 'home',
     redirect: '/dashboard', // 重定向:重新指向其它path,会改变网址
     component: HomeView,
-    children: [...addRouters]
+    children: [...homeRoutes]
   }
 ]
 // console.log(routes)
@@ -95,16 +49,39 @@ const router = createRouter({
   routes: [...globalRoutes, ...routes]
 })
 
+const addRouters = <any>[]
 //登录鉴权
 router.beforeEach((to, from, next) => {
-  if (to.path == '/login') {
+  if (getToken()) {
+    //动态添加路由
+    if (addRouters.length == 0) {
+      getMenu().then((res: any) => {
+        res.forEach((item: any) => {
+          // 动态添加路由
+          item.children.forEach((ele: any) => {
+            router.addRoute('home', {
+              path: '/' + ele.path,
+              name: ele.name,
+              meta: ele.meta,
+              component: () => import('../views/' + ele.component + '.vue')
+            })
+          })
+          // 动态添加路由,并保存到sessionStorage中
+          addRouters.push(item)
+          sessionStorage.setItem('addRouters', JSON.stringify(addRouters))
+        })
+        console.log(addRouters, 'addRoutersaddRoutersaddRouters')
+      })
+    }
     next()
   } else {
-    if (getToken()) {
+    if (to.path === '/login') {
       next()
     } else {
       next('/login')
     }
   }
 })
+console.log(router, 'routerrouterrouterrouterrouter')
+
 export default router
