@@ -47,7 +47,7 @@ import UserManagerComponent from '@/components/UserManagerComponent.vue'
 //引入图标
 import { Delete, Edit } from '@element-plus/icons-vue'
 //引入接口
-import { getJobList, addJob } from '@/api/api'
+import { getJobList } from '@/api/api'
 
 //获取表格数据
 const tableData = reactive({

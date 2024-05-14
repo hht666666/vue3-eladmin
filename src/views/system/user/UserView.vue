@@ -178,7 +178,7 @@ let total = ref(0)
 //删除用户
 const del = (row: any) => {
   console.log(row)
-  deleteUser(row.id).then((res: any) => {
+  deleteUser(row.id).then(() => {
     // console.log(res)
     ElNotification({
       title: 'Success',
